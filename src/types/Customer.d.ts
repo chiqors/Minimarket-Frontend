@@ -1,17 +1,16 @@
-import type { JSONResponse} from "@/types/JSONResponse";
-
 /**
- * @interface ProductCategoryPageResponse
+ * @interface CustomerResponse
  *
  * @property {string} message
- * @property {object} data
- * @property {ProductCategory[]} data.content
+ * @property {Object} data
+ * @property {Customer[]} data.content
  * @property {array} errors
  * @property {number} http_code
  */
-export interface ProductCategoryPageResponse extends JSONResponse {
+export interface CustomerResponse {
+    message: string;
     data: {
-        content: ProductCategory[];
+        content: Customer[];
         pageable: {
             sort: {
                 empty: boolean;
@@ -38,33 +37,29 @@ export interface ProductCategoryPageResponse extends JSONResponse {
         first: boolean;
         empty: boolean;
     };
+    errors: null;
+    http_code: number;
 }
 
 /**
- * @interface ProductCategoryListResponse
+ * @interface Customer
  *
- * @property {string} message
- * @property {ProductCategory[]} data
- * @property {array} errors
- * @property {number} http_code
- */
-export interface ProductCategoryListResponse extends JSONResponse {
-    data: ProductCategory[];
-}
-
-/**
- * @interface ProductCategory
- *
- * @property {string} slug
  * @property {string} name
- * @property {string} sku_created
+ * @property {string} gender
+ * @property {string} birth_date
+ * @property {string} address
+ * @property {string} phone_number
  * @property {string} created_at
  * @property {string} updated_at
+ * @property {string} customer_code
  */
-export interface ProductCategory {
-    slug?: string;
-    name?: string;
-    sku_created?: string;
-    created_at?: string;
-    updated_at?: string;
+export interface Customer {
+    name: string;
+    gender: string;
+    birth_date: string;
+    address: string;
+    phone_number: string;
+    created_at: string;
+    updated_at: string;
+    customer_code: string;
 }

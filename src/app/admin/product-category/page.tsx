@@ -1,48 +1,15 @@
 import ProductCategoryTable from "@/app/admin/product-category/ProductCategoryTable";
 
-import type {ProductCategoryResponse} from "@/types/ProductCategory";
-
-async function getData(name?: string, page?: number, size?: number): Promise<ProductCategoryResponse> {
-    let url = process.env.BACKEND_URL + '/api/product-categories';
-
-    // Append query parameters if provided
-    if (name || page || size) {
-        url += '?';
-
-        if (name) {
-            url += 'name=' + name;
-        }
-
-        if (page) {
-            url += (name ? '&' : '') + 'page=' + page;
-        }
-
-        if (size) {
-            url += ((name || page) ? '&' : '') + 'size=' + size;
-        }
-    }
-
-    const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        next: {
-            revalidate: 10,
-        },
-    });
-
-    return await response.json();
-}
-
-export default async function ProductCategoryPage(
+export default function ProductCategoryPage(
     {
         searchParams
     }: {
         searchParams: { [key: string]: string | string[] | undefined };
     }) {
 
-    const data = await getData(searchParams.name as string, Number(searchParams.page), Number(searchParams.size));
+    const name = searchParams.name ? String(searchParams.name) : '';
+    const page = searchParams.page ? Number(searchParams.page) : 1;
+    const size = searchParams.size ? Number(searchParams.size) : 3;
 
     return (
         <>
@@ -54,7 +21,7 @@ export default async function ProductCategoryPage(
                 </button>
             </div>
 
-            <ProductCategoryTable data={data}/>
+            <ProductCategoryTable name={name} page={page} size={size} />
         </>
     );
 }

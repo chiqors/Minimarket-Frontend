@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Script from "next/script";
+import Head from "next/head";
 
 export default function AdminLayout({
    children,
@@ -8,6 +9,10 @@ export default function AdminLayout({
 }) {
     return (
         <>
+            <Head>
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+            </Head>
+
             <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar"
                     aria-controls="default-sidebar" type="button"
                     className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
@@ -95,7 +100,7 @@ export default function AdminLayout({
                 {children}
             </div>
 
-            <Script src="../../../node_modules/flowbite/dist/flowbite.min.js"></Script>
+            <Script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></Script>
         </>
     )
 }

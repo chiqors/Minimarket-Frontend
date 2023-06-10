@@ -1,7 +1,8 @@
+import type {JSONResponse} from "@/types/JSONResponse";
 import type {ProductCategory} from "@/types/ProductCategory";
 
 /**
- * @interface ProductResponse
+ * @interface ProductPageResponse
  *
  * @property {string} message
  * @property {object} data
@@ -9,8 +10,7 @@ import type {ProductCategory} from "@/types/ProductCategory";
  * @property {array} errors
  * @property {number} http_code
  */
-export interface ProductResponse {
-    message: string;
+export interface ProductPageResponse extends JSONResponse {
     data: {
         content: Product[];
         pageable: {
@@ -39,8 +39,39 @@ export interface ProductResponse {
         first: boolean;
         empty: boolean;
     };
-    errors: null;
-    http_code: number;
+}
+
+/**
+ * @interface ProductResponse
+ *
+ * @property {string} message
+ * @property {Product} data
+ * @property {array} errors
+ * @property {number} http_code
+ */
+export interface ProductResponse extends JSONResponse {
+    data: Product;
+}
+
+/**
+ * @interface FormProductRequest
+ *
+ * @property {string} name
+ * @property {string} description
+ * @property {number} price
+ * @property {number} stock
+ * @property {string} slug
+ * @property {string} sku_code
+ * @property {ProductCategory} product_category
+ */
+export interface FormProductRequest {
+    name?: string;
+    description?: string;
+    price?: number;
+    stock?: number;
+    slug?: string;
+    sku_code?: string;
+    product_category?: ProductCategory;
 }
 
 /**
