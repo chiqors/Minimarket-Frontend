@@ -1,12 +1,12 @@
 import { APP_BACKEND_URL } from "@/config";
 
-import type {FormProductRequest} from "@/types/Product";
-import type {JSONResponse} from "@/types/JSONResponse";
+import type {FormProductRequest, Product} from "@/types/Product";
+import type {JSONResponse} from "@/types/misc/JSONResponse";
 
 const API_URL = APP_BACKEND_URL + '/api';
 
 /**
- * Get all customer
+ * Get all products
  * @param name Search by name
  * @param page Page number
  * @param size Page size
@@ -20,6 +20,31 @@ export const getAllProducts = (name?: string, page?: number, size?: number) => {
 
     return `${API_URL}/products?${params.toString()}`;
 };
+
+/**
+ * Get all product category
+ * @param name Search by name
+ * @param page Page number
+ * @param size Page size
+ * @returns String URL Generated
+ */
+export const getAllProductCategory = (name?: string, page?: number, size?: number) => {
+    const params = new URLSearchParams();
+    if (name) params.append('name', name);
+    if (page) params.append('page', page.toString());
+    if (size) params.append('size', size.toString());
+
+    return `${API_URL}/product-categories?${params.toString()}`;
+};
+
+/**
+ * get all product category for dropdown
+ *
+ * @returns String URL Generated
+ */
+export const getAllProductCategoryForDropdown = () => {
+    return `${API_URL}/product-categories/dropdown`;
+}
 
 /**
  * Get product by slug
@@ -46,7 +71,7 @@ export async function addProduct (formProduct: FormProductRequest) {
         body: JSON.stringify(formProduct),
     });
 
-    return await response.json() as JSONResponse;
+    return await response.json() as JSONResponse<Product>
 }
 
 /**
@@ -64,7 +89,7 @@ export async function updateProduct (formProduct: FormProductRequest) {
         body: JSON.stringify(formProduct),
     });
 
-    return await response.json() as JSONResponse;
+    return await response.json() as JSONResponse<Product>
 }
 
 /**
@@ -82,5 +107,5 @@ export async function deleteProduct (formProduct: FormProductRequest) {
         body: JSON.stringify(formProduct),
     });
 
-    return await response.json() as JSONResponse;
+    return await response.json() as JSONResponse<Product>
 }

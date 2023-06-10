@@ -11,7 +11,9 @@ import CircleLoading from "@/components/ui/CircleLoading";
 import {convertToCurrency, getHumanReadableDatetime, shortenDescription} from "@/util/Helper";
 
 import { useState } from "react";
-import type {Product, ProductPageResponse} from "@/types/Product";
+
+import type {JSONResponse, PageJSONResponse } from "@/types/misc/JSONResponse";
+import type {Product} from "@/types/Product";
 
 import ProductSearch from "@/app/admin/product/ProductSearch";
 
@@ -22,7 +24,7 @@ export default function ProductCategoryTable({ name, page, size }: { name: strin
     const [currentPage, setCurrentPage] = useState(page);
     const [currentSize, setCurrentSize] = useState(size);
 
-    const { data: productPageResponse, error, isLoading, mutate } = useSWR<ProductPageResponse>(
+    const { data: productPageResponse, error, isLoading, mutate } = useSWR<JSONResponse<PageJSONResponse<Product>>>(
         getAllProducts(searchQuery, currentPage, currentSize),
         fetcher
     );

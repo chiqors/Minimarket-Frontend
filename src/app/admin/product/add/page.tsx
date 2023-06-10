@@ -3,15 +3,15 @@
 import {FormEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import {addProduct} from "@/api/ProductApi";
-import {getAllProductCategoryForDropdown} from "@/api/ProductCategoryApi";
+import {getAllProductCategoryForDropdown} from "@/api/ProductApi";
 import Image from "next/image";
 import useSWR from "swr";
 import CircleLoading from "@/components/ui/CircleLoading";
 import ErrorAlert from "@/components/ui/ErrorAlert";
 
-import type {FormProductRequest} from "@/types/Product";
-import type {ProductCategory, ProductCategoryListResponse} from "@/types/ProductCategory";
-import type {JSONResponse} from "@/types/JSONResponse";
+import type {FormProductRequest, Product} from "@/types/Product";
+import type {ProductCategory} from "@/types/Product";
+import type {JSONResponse} from "@/types/misc/JSONResponse";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -23,11 +23,11 @@ export default function CreateProductPage() {
     const [productCategorySku, setProductCategorySku] = useState("");
     const [image, setImage] = useState("");
 
-    const [errorFlash, setErrorFlash] = useState<JSONResponse | null>(null);
+    const [errorFlash, setErrorFlash] = useState<JSONResponse<Product> | null>(null);
 
     const router = useRouter();
 
-    const {data: productCategoryResponse, error, isLoading} = useSWR<ProductCategoryListResponse>(
+    const {data: productCategoryResponse, error, isLoading} = useSWR<JSONResponse<ProductCategory[]>>(
         getAllProductCategoryForDropdown(),
         fetcher
     );

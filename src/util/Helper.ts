@@ -70,10 +70,23 @@ export const getHumanReadableTime = (datetime: string) => {
     return dayjs(datetime).format("h:mm A");
 };
 
-export const getHumanReadableDatetime = (datetime: string) => {
+export const getHumanReadableDatetime = (datetime: string | undefined) => {
     // example output: "September 1, 2021 12:00 AM"
-    return dayjs(datetime).format("MMMM D, YYYY h:mm A");
+    if (datetime) {
+        return dayjs(datetime).format("MMMM D, YYYY h:mm A");
+    } else {
+        return "-";
+    }
 };
+
+export const getHumanReadableDatetimeV2 = (datetime: string | undefined) => {
+    // example output: 20:00 at 20 Jan 2021
+    if (datetime) {
+        return dayjs(datetime).format("HH:mm [at] DD MMM YYYY");
+    } else {
+        return "-";
+    }
+}
 
 export const getHumanReadableDateFromNow = (datetime: string) => {
     // yesterday, 2 days ago and 3 days ago. After that, it will return the date

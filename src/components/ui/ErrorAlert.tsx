@@ -1,4 +1,4 @@
-import {JSONResponse} from "@/types/JSONResponse";
+import {JSONResponse} from "@/types/misc/JSONResponse";
 
 export default function ErrorAlert({error}: {error: JSONResponse}) {
     return (

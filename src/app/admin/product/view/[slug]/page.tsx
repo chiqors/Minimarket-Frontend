@@ -1,6 +1,7 @@
 import {getProductBySlug} from '@/api/ProductApi';
-import {ProductResponse} from "@/types/Product";
+import {Product} from "@/types/Product";
 import {convertToCurrency, getHumanReadableDatetime} from "@/util/Helper";
+import {JSONResponse} from "@/types/misc/JSONResponse";
 
 async function getData(slug: string) {
     const response = await fetch(getProductBySlug(slug), {
@@ -13,12 +14,11 @@ async function getData(slug: string) {
         }
     });
 
-    console.log(response);
-    return await response.json() as ProductResponse;
+    return await response.json() as JSONResponse<Product>;
 }
 
 export default async function ProductView({ params }: { params: { slug: string } }) {
-    const productResponse: ProductResponse = await getData(params.slug);
+    const productResponse: JSONResponse<Product> = await getData(params.slug);
 
     return (
         <div className="mx-auto max-w-4xl mt-4">

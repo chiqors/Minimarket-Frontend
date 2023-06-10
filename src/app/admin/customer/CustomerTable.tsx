@@ -10,8 +10,9 @@ import {getAgeFromBirthDate, getGenderName} from "@/util/Helper";
 
 
 import { useState } from "react";
-import type { CustomerResponse, Customer } from "@/types/Customer";
 import CustomerSearch from "@/app/admin/customer/CustomerSearch";
+import type { Customer } from "@/types/Person";
+import type {JSONResponse, PageJSONResponse} from "@/types/misc/JSONResponse";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -20,7 +21,7 @@ export default function CustomerTable({ name, page, size }: { name: string; page
     const [currentPage, setCurrentPage] = useState(page);
     const [currentSize, setCurrentSize] = useState(size);
 
-    const { data: customerResponse, error, isLoading } = useSWR<CustomerResponse>(
+    const { data: customerResponse, error, isLoading } = useSWR<JSONResponse<PageJSONResponse<Customer>>>(
         () => getAllCustomer(searchQuery, currentPage, currentSize),
         fetcher
     );

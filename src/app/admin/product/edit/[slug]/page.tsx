@@ -2,16 +2,15 @@
 
 import {FormEvent, useState, useEffect} from "react";
 import {useRouter} from "next/navigation";
-import {getProductBySlug, updateProduct} from "@/api/ProductApi";
-import {getAllProductCategoryForDropdown} from "@/api/ProductCategoryApi";
+import {getProductBySlug, getAllProductCategoryForDropdown, updateProduct} from "@/api/ProductApi";
 import Image from "next/image";
 import useSWR from "swr";
 import CircleLoading from "@/components/ui/CircleLoading";
 import ErrorAlert from "@/components/ui/ErrorAlert";
 
-import type {FormProductRequest, ProductResponse} from "@/types/Product";
-import type {ProductCategory, ProductCategoryListResponse} from "@/types/ProductCategory";
-import type {JSONResponse} from "@/types/JSONResponse";
+import type {FormProductRequest, Product} from "@/types/Product";
+import type {ProductCategory} from "@/types/Product";
+import type {JSONResponse} from "@/types/misc/JSONResponse";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -24,16 +23,16 @@ export default function UpdateProductPage({ params }: { params: { slug: string }
     const [productCategorySku, setProductCategorySku] = useState<string | undefined>(undefined);
     const [image, setImage] = useState("");
 
-    const [errorFlash, setErrorFlash] = useState<JSONResponse | null>(null);
+    const [errorFlash, setErrorFlash] = useState<JSONResponse<Product> | null>(null);
 
     const router = useRouter();
 
-    const {data: productResponse, error: productError, isLoading: productIsLoading} = useSWR<ProductResponse>(
+    const {data: productResponse, error: productError, isLoading: productIsLoading} = useSWR<JSONResponse<Product>>(
         getProductBySlug(slug),
         fetcher
     );
 
-    const {data: productCategoryResponse, error: productCategoryError, isLoading: productCategoryIsLoading} = useSWR<ProductCategoryListResponse>(
+    const {data: productCategoryResponse, error: productCategoryError, isLoading: productCategoryIsLoading} = useSWR<JSONResponse<ProductCategory[]>>(
         getAllProductCategoryForDropdown(),
         fetcher
     );

@@ -3,12 +3,13 @@
 import useSWR from "swr";
 import Link from "next/link";
 
-import { getAllProductCategory} from "@/api/ProductCategoryApi";
+import { getAllProductCategory } from "@/api/ProductApi";
 import CircleLoading from "@/components/ui/CircleLoading";
 import {getHumanReadableDatetime} from "@/util/Helper";
 
 import { useState } from "react";
-import type { ProductCategoryResponse, ProductCategory } from "@/types/ProductCategory";
+import type { JSONResponse, PageJSONResponse } from "@/types/misc/JSONResponse";
+import type { ProductCategory } from "@/types/Product";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -17,7 +18,7 @@ export default function ProductCategoryTable({ name, page, size }: { name: strin
     const [currentPage, setCurrentPage] = useState(page);
     const [currentSize, setCurrentSize] = useState(size);
 
-    const { data: productCategoryResponse, error, isLoading } = useSWR<ProductCategoryResponse>(
+    const { data: productCategoryResponse, error, isLoading } = useSWR<JSONResponse<PageJSONResponse<ProductCategory>>>(
         () => getAllProductCategory(searchQuery, currentPage, currentSize),
         fetcher
     );

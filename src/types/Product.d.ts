@@ -1,58 +1,3 @@
-import type {JSONResponse} from "@/types/JSONResponse";
-import type {ProductCategory} from "@/types/ProductCategory";
-
-/**
- * @interface ProductPageResponse
- *
- * @property {string} message
- * @property {object} data
- * @property {Product[]} data.content
- * @property {array} errors
- * @property {number} http_code
- */
-export interface ProductPageResponse extends JSONResponse {
-    data: {
-        content: Product[];
-        pageable: {
-            sort: {
-                empty: boolean;
-                sorted: boolean;
-                unsorted: boolean;
-            };
-            offset: number;
-            pageSize: number;
-            pageNumber: number;
-            unpaged: boolean;
-            paged: boolean;
-        };
-        totalElements: number;
-        totalPages: number;
-        last: boolean;
-        size: number;
-        number: number;
-        sort: {
-            empty: boolean;
-            sorted: boolean;
-            unsorted: boolean;
-        };
-        numberOfElements: number;
-        first: boolean;
-        empty: boolean;
-    };
-}
-
-/**
- * @interface ProductResponse
- *
- * @property {string} message
- * @property {Product} data
- * @property {array} errors
- * @property {number} http_code
- */
-export interface ProductResponse extends JSONResponse {
-    data: Product;
-}
-
 /**
  * @interface FormProductRequest
  *
@@ -97,4 +42,21 @@ export interface Product {
     created_at: string;
     updated_at: string;
     product_category: ProductCategory;
+}
+
+/**
+ * @interface ProductCategory
+ *
+ * @property {string} slug
+ * @property {string} name
+ * @property {string} sku_created
+ * @property {string} created_at
+ * @property {string} updated_at
+ */
+export interface ProductCategory {
+    slug?: string;
+    name?: string;
+    sku_created?: string;
+    created_at?: string;
+    updated_at?: string;
 }
