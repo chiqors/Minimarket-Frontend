@@ -1,7 +1,7 @@
 import {FaCheckCircle, FaListAlt, FaTimesCircle} from "react-icons/fa";
 import {getTransactionByTransactionCode} from "@/api/TransactionApi";
 
-import TransactionDetailsSlider from "@/app/admin/transaction/[code]/TransactionDetailsSlider";
+import TransactionDetailsSlider from "@/app/admin/transaction/view/[code]/TransactionDetailsSlider";
 
 import type {JSONResponse} from "@/types/misc/JSONResponse";
 import type {Transaction} from "@/types/Transaction";

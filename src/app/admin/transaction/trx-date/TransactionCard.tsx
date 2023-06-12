@@ -6,24 +6,34 @@ import { BsChevronDoubleRight } from "react-icons/bs";
 import Link from "next/link";
 import useSWR from "swr";
 
-import { getAllTransactions} from "@/api/TransactionApi";
+import {getTransactionByDate} from "@/api/TransactionApi";
 
 import type { Transaction } from "@/types/Transaction";
 import type { JSONResponse, PageJSONResponse } from "@/types/misc/JSONResponse";
 import {convertToCurrency, getHumanReadableDatetimeV2} from "@/util/Helper";
 import {useState} from "react";
 import CircleLoading from "@/components/ui/CircleLoading";
+import TransactionInputDate from "@/app/admin/transaction/trx-date/TransactionInputDate";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export default function TransactionCard({ page, size }: { page: number, size: number }) {
+export default function TransactionCard({ page, size, startDate, endDate }: { page: number; size: number; startDate: string | number | readonly string[] | undefined; endDate: string | number | readonly string[] | undefined }) {
     const [currentPage, setCurrentPage] = useState(page);
     const [currentSize, setCurrentSize] = useState(size);
 
+    const [currentStartDate, setCurrentStartDate] = useState(startDate);
+    const [currentEndDate, setCurrentEndDate] = useState(endDate);
+
     const { data: transactionResponse, error, isLoading } = useSWR<JSONResponse<PageJSONResponse<Transaction>>>(
-        getAllTransactions(currentPage, currentSize),
+        getTransactionByDate(currentStartDate, currentEndDate, currentPage, currentSize),
         fetcher
     );
+
+    const handleDateChange = (startDate: string | number | readonly string[] | undefined, endDate: string | number | readonly string[] | undefined) => {
+        setCurrentStartDate(startDate);
+        setCurrentEndDate(endDate);
+        setCurrentPage(1); // Reset to the first page when a new query is entered
+    }
 
     const handlePreviousPage = () => {
         if (!transactionResponse?.data.first) {
@@ -51,6 +61,7 @@ export default function TransactionCard({ page, size }: { page: number, size: nu
 
     return (
         <>
+            <TransactionInputDate startDate={currentStartDate} endDate={currentEndDate} onDateChange={handleDateChange} />
             <div className="bg-white overflow-hidden shadow rounded-lg divide-y-2 divide-gray-200">
                 {transactionResponse?.data?.content?.map((transaction) => (
                     <div key={transaction.transaction_code} className="px-4 py-5 sm:p-6 hover:bg-gray-50 cursor-pointer">
@@ -96,7 +107,7 @@ export default function TransactionCard({ page, size }: { page: number, size: nu
                                 <span className="px-2 py-1 text-sm font-semibold bg-gray-200 text-gray-800 mb-2">
                                     Total Price: {convertToCurrency(transaction.total_price)}
                                 </span>
-                                <Link href={"/admin/transaction/view/" + transaction.transaction_code} className="text-indigo-600 hover:text-indigo-500">
+                                <Link href={"/admin/transaction/" + transaction.transaction_code} className="text-indigo-600 hover:text-indigo-500">
                                     View Details <BsChevronDoubleRight className="inline-block h-5 w-5" aria-hidden="true" />
                                 </Link>
                                 {/* Add more details if needed */}

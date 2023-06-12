@@ -39,6 +39,8 @@ export const getGenderName = (gender: string) => {
 }
 
 export const convertToCurrency = (amount: number) => {
+    // remove trailing zeros
+    amount = Number(amount.toFixed(0));
     // indonesia currency format
     return new Intl.NumberFormat("id-ID", {
         style: "currency",
@@ -95,4 +97,14 @@ export const getHumanReadableDateFromNow = (datetime: string) => {
     } else {
         return getHumanReadableDatetime(datetime);
     }
+}
+
+export const getDateAWeekAgo = () => {
+    // example output: "2021-09-01"
+    return dayjs().subtract(7, "day").format("YYYY-MM-DD");
+}
+
+export const getDateToday = () => {
+    // example output: "2021-09-01"
+    return dayjs().format("YYYY-MM-DD");
 }
