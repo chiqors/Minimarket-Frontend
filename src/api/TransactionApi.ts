@@ -62,10 +62,18 @@ export const getMostPurchaseProduct = () => {
  *
  * @param start_date Start date of transaction
  * @param end_date End date of transaction
+ * @param page Page number
+ * @param size Page size
  * @return List of CustomerPurchasedDTO
  */
-export const getCustomerPurchased = (start_date: string, end_date: string) => {
-    return `${API_URL}/transactions/customer-purchased?start_date=${start_date}&end_date=${end_date}`;
+export const getCustomerPurchased = (start_date: string | number | readonly string[] | undefined, end_date: string | number | readonly string[] | undefined, page: number, size: number) => {
+    const params = new URLSearchParams();
+    if (start_date) params.append('start_date', start_date.toString());
+    if (end_date) params.append('end_date', end_date.toString());
+    params.append('page', page.toString());
+    params.append('size', size.toString());
+
+    return `${API_URL}/transactions/customer-purchased?${params.toString()}`;
 }
 
 /**

@@ -90,15 +90,6 @@ export const getHumanReadableDatetimeV2 = (datetime: string | undefined) => {
     }
 }
 
-export const getHumanReadableDateFromNow = (datetime: string) => {
-    // yesterday, 2 days ago and 3 days ago. After that, it will return the date
-    if (dayjs().diff(dayjs(datetime), "day") < 4) {
-        return dayjs(datetime).fromNow();
-    } else {
-        return getHumanReadableDatetime(datetime);
-    }
-}
-
 export const getDateAWeekAgo = () => {
     // example output: "2021-09-01"
     return dayjs().subtract(7, "day").format("YYYY-MM-DD");
