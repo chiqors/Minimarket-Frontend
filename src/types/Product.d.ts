@@ -60,3 +60,12 @@ export interface ProductCategory {
     created_at?: string;
     updated_at?: string;
 }
+
+export interface RelatedMostPurchase {
+    name: string;
+    category: string;
+    sku_code: string;
+    total_purchased: number;
+    stock: number;
+    price: number;
+}

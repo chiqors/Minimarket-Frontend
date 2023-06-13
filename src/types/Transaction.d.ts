@@ -117,10 +117,10 @@ export interface MostPurchaseProduct {
 /**
  * @interface TransactionBetweenDateResponseData
  *
- * @property {PageJSONResponse<T>} data_pagination
+ * @property {T} data_pagination
  * @property {double} total_price
  */
 export interface TransactionBetweenDateResponseData<T> {
-    data_pagination: PageJSONResponse<T>;
+    data_pagination: T;
     total_price: double;
 }

@@ -84,7 +84,7 @@ export const getCustomerPurchased = (start_date: string | number | readonly stri
  * @return List of MostPurchasedProductDTO
  */
 export const getMostPurchasedProductBySkuCode = (skuCode: string) => {
-    return `${API_URL}/transactions/most-purchased-product/${skuCode}`;
+    return `${API_URL}/transactions/most-purchased-with/${skuCode}`;
 }
 
 /**

@@ -64,7 +64,8 @@ export default function TransactionCard({ page, size, startDate, endDate }: { pa
         <>
             <TransactionInputDate startDate={currentStartDate} endDate={currentEndDate} onDateChange={handleDateChange} />
             <div className="bg-white overflow-hidden shadow rounded-lg divide-y-2 divide-gray-200">
-                {transactionResponse?.data?.data_pagination?.content?.map((transaction: TransactionBetweenDate) => (
+                {/* i hate this TS error typing */}
+                {transactionResponse?.data.data_pagination.content.map((transaction: TransactionBetweenDate) => (
                     <div key={transaction.transaction_code} className="px-4 py-5 sm:p-6 hover:bg-gray-50 cursor-pointer">
                         <div className="flex items-start">
                             <div className="flex items-center">
